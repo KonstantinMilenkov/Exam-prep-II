@@ -20,7 +20,8 @@ public class Task extends BaseEntity{
     @Column(nullable = false)
     @Future
     private LocalDate dueDate;
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @NotNull
     private Priority priority;
     @ManyToOne
     private User assignee;

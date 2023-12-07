@@ -19,23 +19,20 @@ public class PriorityInit implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         long count = priorityRepository.count();
 
         if (count == 0) {
-
-            List<Priority> priorityList = new ArrayList<>();
+            List<Priority> priorities = new ArrayList<>();
 
             Arrays.stream(PriorityName.values())
                     .forEach(priorityName -> {
                         Priority priority = new Priority();
                         priority.setName(priorityName);
-                        priorityList.add(priority);
+                        priorities.add(priority);
                     });
 
-            priorityRepository.saveAll(priorityList);
-
+            priorityRepository.saveAll(priorities);
         }
-
     }
 }

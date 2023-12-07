@@ -1,5 +1,6 @@
 package com.plannerapp.service.impl;
 
+import com.plannerapp.model.dto.user.UserLoginBindingModel;
 import com.plannerapp.model.dto.user.UserRegisterBindingModel;
 import com.plannerapp.model.entity.User;
 import com.plannerapp.repo.UserRepository;
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final LoggedUser loggedUser;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, LoggedUser loggedUser) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.loggedUser = loggedUser;
     }
 
     @Override
@@ -39,5 +42,24 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return true;
+    }
+
+    @Override
+    public boolean login(UserLoginBindingModel userLoginBindingModel) {
+        String username = userLoginBindingModel.getUsername();
+        User user = userRepository.findByUsername(userLoginBindingModel.getUsername());
+
+        if (user != null
+                && passwordEncoder.matches(userLoginBindingModel.getPassword(),user.getPassword())){
+            loggedUser.login(username);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void logout() {
+        this.loggedUser.logout();
     }
 }

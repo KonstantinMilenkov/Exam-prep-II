@@ -23,9 +23,11 @@
             <!--               id="username" name="username"/>-->
             <!--        <small class="invalid-feedback text-danger">Username error message</small>-->
 
+            <div th:if="${hasRegistrationError}" class="text-danger">Registration Error occurred</div>
+
             <input type="text" class="form-control" id="username"
                    th:field="*{username}"
-                   th:errorClass="bg-danger"/>
+                   th:errorclass="bg-danger"/>
             <small th:if="${#fields.hasErrors('username')}"
                    th:errors="*{username}" class="text-danger">Username error message</small>
         </div>
@@ -36,7 +38,7 @@
             </div>
             <input type="email" class="form-control" id="email"
                    th:field="*{email}"
-                   th:errorClass="bg-danger"/>
+                   th:errorclass="bg-danger"/>
             <small th:if="${#fields.hasErrors('email')}"
                    th:errors="*{email}" class="text-danger">Email error message</small>
         </div>
@@ -47,7 +49,7 @@
             </div>
             <input type="password" class="form-control" id="password"
                    th:field="*{password}"
-                   th:errorClass="bg-danger"/>
+                   th:errorclass="bg-danger"/>
             <small th:if="${#fields.hasErrors('password')}"
                    th:errors="*{password}" class="text-danger">Password error message</small>
         </div>
@@ -58,7 +60,7 @@
             </div>
             <input type="password" class="form-control" id="confirmPassword"
                    th:field="*{confirmPassword}"
-                   th:errorClass="${#fields.hasErrors('password')} ? 'bg-danger'"/>
+                   th:classappend="${#fields.hasErrors('password')} ? 'bg-danger'"/>
         </div>
 
         <div class="button-holder d-flex justify-content-center">
